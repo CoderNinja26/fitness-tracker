@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0d0c" />
+  <title>FitTrack — Fitness, made measurable</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">F</span><span>fit<span class="green">track</span></span></a>
+      <div class="side-label">MENU</div>
+      <nav class="nav">
+        <button class="nav-item active" data-page="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-item" data-page="nutrition"><span>◉</span> Nutrition</button>
+        <button class="nav-item" data-page="workout"><span>✳</span> Workout planner</button>
+        <button class="nav-item" data-page="progress"><span>⌁</span> Progress</button>
+        <button class="nav-item" data-page="assistant"><span>✧</span> AI assistant</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="mini-profile"><div class="avatar">U</div><div><strong id="sidebarName">Uday</strong><small>Muscle gain journey</small></div></div>
+        <button class="nav-item" data-page="settings"><span>⚙</span> Settings</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="brand-mark">F</span> fit<span class="green">track</span></div>
+        <div><div class="eyebrow" id="todayLabel">YOUR FITNESS OVERVIEW</div><h1 id="pageTitle">Dashboard</h1></div>
+        <div class="top-actions"><span class="date-pill" id="datePill"></span><button class="icon-btn" id="quickAddBtn" title="Quick add">＋</button></div>
+      </header>
+
+      <section class="page active" id="page-dashboard">
+        <div class="welcome-row"><div><p class="muted">LET'S MAKE TODAY COUNT</p><h2>Build strength. <span class="green">Track progress.</span></h2><p class="muted">Small consistent wins create big changes.</p></div><div class="goal-chip">↗ &nbsp; MUSCLE GAIN MODE</div></div>
+        <div class="stats-grid">
+          <article class="stat-card calorie-card"><div class="card-top"><span>Calories consumed</span><span class="stat-icon">◉</span></div><div class="stat-value"><strong id="dashCalories">0</strong><small> / <span id="dashCalTarget">2,600</span> kcal</small></div><div class="progress-track"><div class="progress-fill" id="calorieBar"></div></div><div class="stat-foot"><span id="calorieRemaining">2,600 kcal remaining</span><span id="caloriePercent">0%</span></div></article>
+          <article class="stat-card"><div class="card-top"><span>Protein</span><span class="stat-icon green-text">↗</span></div><div class="stat-value"><strong id="dashProtein">0</strong><small> / <span id="dashProteinTarget">140</span> g</small></div><div class="progress-track"><div class="progress-fill protein-fill" id="proteinBar"></div></div><div class="stat-foot"><span>Daily target</span><span id="proteinPercent">0%</span></div></article>
+          <article class="stat-card"><div class="card-top"><span>Carbs</span><span class="stat-icon orange-text">⌁</span></div><div class="stat-value"><strong id="dashCarbs">0</strong><small> / 300 g</small></div><div class="progress-track"><div class="progress-fill carbs-fill" id="carbsBar"></div></div><div class="stat-foot"><span>Daily target</span><span id="carbsPercent">0%</span></div></article>
+          <article class="stat-card"><div class="card-top"><span>Fats</span><span class="stat-icon purple-text">◈</span></div><div class="stat-value"><strong id="dashFats">0</strong><small> / 80 g</small></div><div class="progress-track"><div class="progress-fill fats-fill" id="fatsBar"></div></div><div class="stat-foot"><span>Daily target</span><span id="fatsPercent">0%</span></div></article>
+        </div>
+
+        <div class="content-grid">
+          <article class="panel"><div class="panel-heading"><div><p class="eyebrow">NUTRITION</p><h3>Today's food log</h3></div><button class="text-btn" data-go="nutrition">View all ↗</button></div><div id="dashboardFoodList" class="food-list empty-state">No meals logged yet. Add your first meal to get started.</div></article>
+          <article class="panel workout-highlight"><div class="panel-heading"><div><p class="eyebrow">TRAINING</p><h3>Today's workout</h3></div><span class="live-dot">READY</span></div><div class="workout-hero-icon">✳</div><h2 id="todayWorkoutName">Push Day</h2><p class="muted" id="todayWorkoutMeta">Chest · Shoulders · Triceps</p><div class="workout-meta"><span>◷ 60–75 min</span><span>▤ 5 exercises</span></div><button class="primary-btn full" data-go="workout">Open workout planner <span>→</span></button></article>
+        </div>
+        <div class="panel chart-panel"><div class="panel-heading"><div><p class="eyebrow">CONSISTENCY</p><h3>Weekly calorie intake</h3></div><span class="muted small">Last 7 days</span></div><div class="chart-wrap"><canvas id="dashboardChart"></canvas></div></div>
+      </section>
+
+      <section class="page" id="page-nutrition">
+        <div class="section-intro"><div><p class="muted">FUEL YOUR PERFORMANCE</p><h2>Nutrition <span class="green">tracker</span></h2><p class="muted">Log what you eat and keep your muscle-gain targets in sight.</p></div><button class="primary-btn" id="openFoodModal">＋ Add food</button></div>
+        <div class="nutrition-summary stats-grid">
+          <article class="stat-card"><span class="muted">Calories</span><div class="stat-value"><strong id="nutCalories">0</strong><small> kcal</small></div><div class="progress-track"><div class="progress-fill" id="nutCalBar"></div></div></article>
+          <article class="stat-card"><span class="muted">Protein</span><div class="stat-value"><strong id="nutProtein">0</strong><small> g</small></div><div class="progress-track"><div class="progress-fill protein-fill" id="nutProteinBar"></div></div></article>
+          <article class="stat-card"><span class="muted">Carbs</span><div class="stat-value"><strong id="nutCarbs">0</strong><small> g</small></div><div class="progress-track"><div class="progress-fill carbs-fill" id="nutCarbsBar"></div></div></article>
+          <article class="stat-card"><span class="muted">Fats</span><div class="stat-value"><strong id="nutFats">0</strong><small> g</small></div><div class="progress-track"><div class="progress-fill fats-fill" id="nutFatsBar"></div></div></article>
+        </div>
+        <div class="panel water-panel"><div class="panel-heading"><div><p class="eyebrow">DAILY HYDRATION</p><h3>Water tracker</h3><span class="muted small">Track plain water separately from tea, coffee and other drinks.</span></div><div class="water-total"><strong id="waterTotal">0</strong><small> / <span id="waterGoalLabel">3000</span> ml</small></div></div><div class="progress-track water-track"><div class="progress-fill" id="waterBar"></div></div><div class="water-actions"><button class="secondary-btn" data-water="250">＋ 250 ml</button><button class="secondary-btn" data-water="500">＋ 500 ml</button><button class="secondary-btn" data-water="750">＋ 750 ml</button><button class="secondary-btn" data-water="1000">＋ 1 L</button><label class="water-custom">Custom ml<input id="customWater" type="number" min="1" max="5000" placeholder="e.g. 350"></label><button class="primary-btn" id="addCustomWater">Add water</button><button class="text-btn" id="waterGoalBtn">Edit goal</button></div><div class="muted tiny" id="waterEntries">No water logged today yet.</div></div>
+        <div class="panel"><div class="panel-heading"><div><p class="eyebrow">FOOD DIARY</p><h3>Today's meals</h3></div><span class="muted small" id="mealCount">0 items</span></div><div id="mealGroups"></div></div>
+        <div class="panel"><div class="panel-heading"><div><p class="eyebrow">FOOD DATABASE</p><h3>Find food</h3></div><span class="muted small">Per 100 g / ml / piece (estimates)</span></div><div class="search-row"><input id="foodSearch" placeholder="Search foods e.g. paneer, rice, banana..." /><select id="foodCategory"><option value="all">All foods</option><option value="Protein">Protein</option><option value="Carbs">Carbs</option><option value="Fruit">Fruit</option><option value="Dairy">Dairy</option><option value="Drinks">Drinks</option><option value="Meals">Indian meals</option><option value="Snacks">Snacks</option><option value="Other">Other</option></select></div><div id="foodResults" class="database-grid"></div></div>
+      </section>
+
+      <section class="page" id="page-workout">
+        <div class="section-intro"><div><p class="muted">TRAIN WITH INTENTION</p><h2>Workout <span class="green">planner</span></h2><p class="muted">Choose a training day, record every set and build your strength history.</p></div><button class="primary-btn" id="newWorkoutBtn">＋ New workout</button></div>
+        <div class="split-tabs" id="splitTabs"><button class="split-tab active" data-split="Push">Push</button><button class="split-tab" data-split="Pull">Pull</button><button class="split-tab" data-split="Legs">Legs</button><button class="split-tab" data-split="Upper">Upper</button><button class="split-tab" data-split="Lower">Lower</button></div>
+        <div class="workout-layout"><div class="panel"><div class="panel-heading"><div><p class="eyebrow">YOUR PROGRAM</p><h3 id="splitTitle">Push day</h3></div><span class="muted small" id="exerciseCount">5 exercises</span></div><div id="exerciseList"></div><button class="secondary-btn full" id="addExerciseBtn">＋ Add exercise</button></div>
+        <div class="panel session-panel"><p class="eyebrow">SESSION TRACKER</p><h3>Workout session</h3><p class="muted small">Log your working sets. Your entries are saved on this device.</p><div class="session-summary"><div><strong id="sessionSets">0</strong><small>Sets logged</small></div><div><strong id="sessionVolume">0</strong><small>Volume (kg)</small></div></div><div id="sessionLog" class="session-log empty-state">No sets logged in this session.</div><button class="primary-btn full" id="finishWorkoutBtn">Finish workout ✓</button><p class="muted tiny">Tip: warm up before heavy sets and use controlled form.</p></div></div>
+        <div class="panel"><div class="panel-heading"><div><p class="eyebrow">RECENT TRAINING</p><h3>Workout history</h3></div></div><div id="workoutHistory" class="history-list"></div></div>
+      </section>
+
+      <section class="page" id="page-progress">
+        <div class="section-intro"><div><p class="muted">YOUR WORK IS ADDING UP</p><h2>Progress <span class="green">report</span></h2><p class="muted">Track body weight, nutrition consistency and training volume.</p></div><button class="secondary-btn" id="logWeightBtn">＋ Log weight</button></div>
+        <div class="stats-grid"><article class="stat-card"><span class="muted">Current weight</span><div class="stat-value"><strong id="currentWeight">67.0</strong><small> kg</small></div><span class="stat-foot muted">Latest entry</span></article><article class="stat-card"><span class="muted">Workouts completed</span><div class="stat-value"><strong id="totalWorkouts">0</strong></div><span class="stat-foot muted">All time</span></article><article class="stat-card"><span class="muted">Total sets</span><div class="stat-value"><strong id="totalSets">0</strong></div><span class="stat-foot muted">Logged sets</span></article><article class="stat-card"><span class="muted">Logged days</span><div class="stat-value"><strong id="loggedDays">0</strong></div><span class="stat-foot muted">Nutrition entries</span></article></div>
+        <div class="content-grid"><div class="panel"><div class="panel-heading"><div><p class="eyebrow">BODY COMPOSITION</p><h3>Weight trend</h3></div></div><div class="chart-wrap"><canvas id="weightChart"></canvas></div></div><div class="panel"><div class="panel-heading"><div><p class="eyebrow">STRENGTH</p><h3>Training volume</h3></div></div><div class="chart-wrap"><canvas id="volumeChart"></canvas></div></div></div>
+        <div class="panel"><div class="panel-heading"><div><p class="eyebrow">BODY WEIGHT LOG</p><h3>History</h3></div></div><div id="weightHistory" class="history-list"></div></div>
+      </section>
+
+      <section class="page" id="page-assistant">
+        <div class="section-intro"><div><p class="muted">YOUR FITNESS COMPANION</p><h2>FitTrack <span class="green">assistant</span></h2><p class="muted">Get practical guidance based on your logged nutrition and training.</p></div><span class="goal-chip">✧ STARTER AI</span></div>
+        <div class="assistant-layout"><div class="panel chat-panel"><div class="chat-header"><div class="assistant-avatar">✧</div><div><strong>FitTrack Coach</strong><small><span class="live-dot"></span> Available now</small></div></div><div id="chatMessages" class="chat-messages"><div class="message bot">Hey! I'm your FitTrack coach. Ask me about your calories, protein, workout split or recovery. What are we working on today?</div></div><div class="suggestions"><button class="suggestion">How much protein should I eat?</button><button class="suggestion">Review my calories today</button><button class="suggestion">Give me a recovery tip</button></div><form id="chatForm" class="chat-input"><input id="chatInput" placeholder="Ask your fitness coach..." autocomplete="off"/><button class="primary-btn" type="submit">Send ↑</button></form></div><div class="panel coach-note"><p class="eyebrow">COACH'S NOTE</p><h3>Consistency beats perfection.</h3><p class="muted">Aim for a modest calorie surplus, progressive overload, enough sleep and good technique. Adjust based on your weekly trend—not one day's result.</p><div class="note-divider"></div><p class="eyebrow">YOUR CURRENT TARGETS</p><div class="target-line"><span>Calories</span><strong>2,600 kcal</strong></div><div class="target-line"><span>Protein</span><strong>140 g</strong></div><div class="target-line"><span>Weight</span><strong>67 kg</strong></div><p class="tiny muted">Starter assistant responses are rule-based and educational, not medical advice. A live AI requires a securely configured API backend.</p></div></div>
+      </section>
+
+      <section class="page" id="page-settings">
+        <div class="section-intro"><div><p class="muted">MAKE IT YOURS</p><h2>Profile & <span class="green">targets</span></h2><p class="muted">Update your details and daily nutrition goals.</p></div></div>
+        <div class="panel settings-panel"><div class="form-grid"><label>Your name<input id="profileName" value="Uday"></label><label>Age<input id="profileAge" type="number" min="13" max="100" value="21"></label><label>Weight (kg)<input id="profileWeight" type="number" step="0.1" value="67"></label><label>Height (cm)<input id="profileHeight" type="number" value="170"></label><label>Daily calorie target<input id="targetCalories" type="number" value="2600"></label><label>Daily protein target (g)<input id="targetProtein" type="number" value="140"></label><label>Daily carbs target (g)<input id="targetCarbs" type="number" value="300"></label><label>Daily fat target (g)<input id="targetFats" type="number" value="80"></label></div><button class="primary-btn" id="saveSettings">Save changes</button><button class="danger-btn" id="resetData">Reset all app data</button><p class="tiny muted">Targets are editable estimates. Your actual needs depend on activity, progress and individual factors.</p></div>
+      </section>
+
+      <footer>FITTRACK <span>·</span> BUILT FOR PROGRESS <span class="footer-right">Your data stays in this browser.</span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="foodModal"><div class="modal"><div class="modal-head"><div><p class="eyebrow">NUTRITION LOG</p><h3>Add food</h3></div><button class="close-btn" data-close="foodModal">×</button></div><form id="foodForm"><label>Food name<input id="entryFood" required placeholder="e.g. Paneer"></label><div class="form-grid"><label>Meal<select id="entryMeal"><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snacks</option></select></label><label>Quantity (g / ml / pieces)<input id="entryQty" type="number" min="1" value="100" required></label><label>Calories<input id="entryCal" type="number" min="0" required></label><label>Protein (g)<input id="entryPro" type="number" min="0" step="0.1" required></label><label>Carbs (g)<input id="entryCarb" type="number" min="0" step="0.1" required></label><label>Fats (g)<input id="entryFat" type="number" min="0" step="0.1" required></label></div><button class="primary-btn full" type="submit">Add to food diary</button></form></div></div>
+  <div class="modal-backdrop" id="setModal"><div class="modal"><div class="modal-head"><div><p class="eyebrow">WORKOUT TRACKER</p><h3 id="setModalTitle">Log set</h3></div><button class="close-btn" data-close="setModal">×</button></div><form id="setForm"><input type="hidden" id="setExercise"><div class="form-grid"><label>Set number<input id="setNumber" type="number" min="1" value="1"></label><label>Reps<input id="setReps" type="number" min="1" value="10" required></label><label>Weight (kg)<input id="setWeight" type="number" min="0" step="0.5" value="20" required></label></div><button class="primary-btn full" type="submit">Save set</button></form></div></div>
+  <div class="modal-backdrop" id="weightModal"><div class="modal"><div class="modal-head"><div><p class="eyebrow">PROGRESS LOG</p><h3>Log body weight</h3></div><button class="close-btn" data-close="weightModal">×</button></div><form id="weightForm"><label>Weight (kg)<input id="weightInput" type="number" step="0.1" min="1" required></label><button class="primary-btn full" type="submit">Save weight</button></form></div></div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
